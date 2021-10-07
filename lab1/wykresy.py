@@ -27,19 +27,23 @@ def plot_data(path):
     return data
 
 def main():
-    path = input("Please pass the path to folder with csv files: ")
+    path = input("Proszę podać ścieżkę do folderu z plikami csv: ")
 
     file_paths = []
     for file in os.listdir(path):
         if file.endswith(".csv"):
             file_paths.append(os.path.join(path, file))
 
+    f, ax = plt.subplots(1)
+
     for path in file_paths:
         data = plot_data(path)
-        plt.plot(data['x'], data['y'])
-        plt.legend(file_paths)
+        ax.plot(data['x'], data['y'])
+        ax.legend(file_paths)
 
-    plt.tight_layout()
+    ax.set_xlim(xmin=0, xmax=500000)
+    plt.xlabel("Rozegranych gier")
+    plt.ylabel("Odsetek wygranych gier")
     plt.show()
 
 
