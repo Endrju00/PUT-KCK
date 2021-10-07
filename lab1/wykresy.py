@@ -1,3 +1,4 @@
+import os
 import csv
 import matplotlib.pyplot as plt
 
@@ -26,9 +27,19 @@ def plot_data(path):
     return data
 
 def main():
-    a = plot_data('data/cel.csv')
+    path = input("Please pass the path to folder with csv files: ")
 
-    plt.plot(a['x'], a['y'])
+    file_paths = []
+    for file in os.listdir(path):
+        if file.endswith(".csv"):
+            file_paths.append(os.path.join(path, file))
+
+    for path in file_paths:
+        data = plot_data(path)
+        plt.plot(data['x'], data['y'])
+        plt.legend(file_paths)
+
+    plt.tight_layout()
     plt.show()
 
 
