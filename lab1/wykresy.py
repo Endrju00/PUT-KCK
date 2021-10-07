@@ -33,19 +33,21 @@ def plot_data(path):
 def main():
     path = input("Proszę podać ścieżkę do folderu z plikami csv: ")
 
-    file_paths = []
+    filepaths = []
+    filenames = []
     for file in os.listdir(path):
         if file.endswith(".csv"):
-            file_paths.append(os.path.join(path, file))
+            filepaths.append(os.path.join(path, file))
+            filenames.append(file[:-4])
 
     f, ax = plt.subplots(1)
 
     i = 0
-    for path in file_paths:
+    for path in filepaths:
         data = plot_data(path)
         ax.plot(data['x'], data['y'],
                 f'{COLORS[i]}{MARKERS[i]}', ls='-', ms=6.5, markevery=25)
-        ax.legend(file_paths)
+        ax.legend(filenames)
         i += 1
 
     ax.set_xlim(xmin=0, xmax=500)
