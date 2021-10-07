@@ -53,7 +53,8 @@ def main():
     ax.set_xlim(xmin=0, xmax=500)
     plt.xlabel("Rozegranych gier (x1000)")
     plt.ylabel("Odsetek wygranych gier [%]")
-    plt.show()
+    plt.savefig('myplot.pdf')
+    plt.close()
 
 
 if __name__ == '__main__':
