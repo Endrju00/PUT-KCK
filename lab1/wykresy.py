@@ -2,6 +2,9 @@ import os
 import csv
 import matplotlib.pyplot as plt
 
+MARKERS = ['o', 's', '^', 'p', 'P']
+COLORS = ['b', 'g', 'r', 'k', 'm']
+
 
 def plot_data(path):
     '''Takes in path to the csv file, returns the dictionary with x and y axises data.'''
@@ -19,12 +22,13 @@ def plot_data(path):
 
             if counter == 1:
                 continue
-            
-            data['x'].append(int(row[1]))
+
+            data['x'].append(int(row[1])/1000)
             runs = list(map(float, row[2:]))
-            data['y'].append(round(sum(runs)/32, 4))
-    
+            data['y'].append(round(sum(runs)/32, 4) * 100)
+
     return data
+
 
 def main():
     path = input("Proszę podać ścieżkę do folderu z plikami csv: ")
@@ -36,14 +40,17 @@ def main():
 
     f, ax = plt.subplots(1)
 
+    i = 0
     for path in file_paths:
         data = plot_data(path)
-        ax.plot(data['x'], data['y'])
+        ax.plot(data['x'], data['y'],
+                f'{COLORS[i]}{MARKERS[i]}', ls='-', ms=6.5, markevery=25)
         ax.legend(file_paths)
+        i += 1
 
-    ax.set_xlim(xmin=0, xmax=500000)
-    plt.xlabel("Rozegranych gier")
-    plt.ylabel("Odsetek wygranych gier")
+    ax.set_xlim(xmin=0, xmax=500)
+    plt.xlabel("Rozegranych gier (x1000)")
+    plt.ylabel("Odsetek wygranych gier [%]")
     plt.show()
 
 
