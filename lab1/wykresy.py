@@ -1,10 +1,19 @@
 import os
 import csv
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 MARKERS = ['o', 's', '^', 'p', 'P']
 COLORS = ['b', 'g', 'r', 'k', 'm']
 PATH_TO_CSV = "data"
+NAMES = {
+    'rsel': '1-Evol-RS',
+    'cel-rs': '1-Coev-RS',
+    '2cel-rs': '2-Coev-RS',
+    'cel': '1-Coev',
+    '2cel': '2-Coev'
+}
 
 
 def get_data(path):
@@ -65,7 +74,7 @@ def main():
         data = get_data(path)
         ax1.plot(data['x'], data['y'],
                 f'{COLORS[i]}{MARKERS[i]}', ls='-', ms=6.5, markevery=25)
-        ax1.legend(filenames, fontsize=11)
+        ax1.legend([NAMES[filename] for filename in filenames], fontsize=11)
         ax2_data[filenames[i]] = data['last'] 
         i += 1
 
@@ -73,10 +82,25 @@ def main():
     ax1.set_xlim(xmin=0, xmax=500)
     ax1.grid(color='lightblue', linestyle='dotted')
     secax = ax1.secondary_xaxis('top', functions=(pokolenie, gry))
+    secax.set_ticks(np.arange(0, 201, 40))
     secax.set_xlabel('Pokolenie', fontsize=13)
-    ax2.boxplot([ax2_data[filename] for filename in filenames],
-            labels=filenames, notch=True, showmeans=True)
+
+    ax2.boxplot(
+            [ax2_data[filename] for filename in filenames],
+            labels=[NAMES[filename] for filename in filenames],
+            notch=True,
+            showmeans=True,
+            boxprops=dict(color="blue"),
+            flierprops = dict(marker='+', markeredgecolor='blue'),
+            medianprops = dict(linewidth=2, color='red'),
+            meanprops = dict(marker='o', markeredgecolor='black',
+                      markerfacecolor='blue'),
+            whiskerprops = dict(linestyle='dashed', color='blue')
+    )
+
     ax2.set_ylim(ymin=60, ymax=100)
+    ax2.yaxis.tick_right()
+    plt.xticks(rotation=45)
     ax2.grid(color='lightblue', linestyle='dotted')
 
     plt.show()
