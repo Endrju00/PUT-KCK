@@ -6,7 +6,7 @@ import numpy as np
 
 MARKERS = ['o', 's', '^', 'p', 'P']  # Markery dla 5 róznych zestawów danych
 COLORS = ['b', 'g', 'r', 'k', 'm']  # Kolory dla 5 róznych zestawów danych
-PATH_TO_CSV = "data"  # Ścieżka do folderu z plikami csv
+PATH_TO_CSV = "."  # Ścieżka do folderu z plikami csv
 NAMES = {  # Nazwy algorytmów związane z nazwami plików
     'rsel': '1-Evol-RS',
     'cel-rs': '1-Coev-RS',
@@ -17,7 +17,8 @@ NAMES = {  # Nazwy algorytmów związane z nazwami plików
 
 
 def get_data(path):
-    '''Takes in path to the csv file, returns the dictionary with x and y axises data.'''
+    '''Funkcja przyjmuje ścieżkę do plików z rozszerzeniem .csv 
+    a następnie zwraca słownik z danymi dla osi x, y oraz ostatnią linię pliku'''
 
     with open(path) as csv_file:
         data = {
@@ -45,10 +46,14 @@ def get_data(path):
 
 
 def pokolenie(x):
+    '''Funkcja przyjmuje argument 
+    a następnie zwraca przeskalowaną wartość.'''
     return 0.4 * x
 
 
 def gry(x):
+    '''Funkcja przyjmuje argument 
+    a następnie zwraca przeskalowaną wartość.'''
     return x
 
 
