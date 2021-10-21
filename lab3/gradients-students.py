@@ -1,27 +1,25 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from __future__ import division             # Division in Python 2.7
-import matplotlib
-matplotlib.use('Agg')                       # So that we can render files without GUI
-import matplotlib.pyplot as plt
-from matplotlib import rc
-import numpy as np
-
 from matplotlib import colors
+import numpy as np
+from matplotlib import rc
+import matplotlib.pyplot as plt
+import matplotlib
+# So that we can render files without GUI
+matplotlib.use('Agg')
+
 
 def plot_color_gradients(gradients, names):
     # For pretty latex fonts (commented out, because it does not work on some machines)
-    #rc('text', usetex=True) 
-    #rc('font', family='serif', serif=['Times'], size=10)
+    # rc('text', usetex=True)
+    # rc('font', family='serif', serif=['Times'], size=10)
     rc('legend', fontsize=10)
 
     column_width_pt = 400         # Show in latex using \the\linewidth
     pt_per_inch = 72
     size = column_width_pt / pt_per_inch
 
-    fig, axes = plt.subplots(nrows=len(gradients), sharex=True, figsize=(size, 0.75 * size))
+    fig, axes = plt.subplots(nrows=len(gradients),
+                             sharex=True, figsize=(size, 0.75 * size))
     fig.subplots_adjust(top=1.00, bottom=0.05, left=0.25, right=0.95)
-
 
     for ax, gradient, name in zip(axes, gradients, names):
         # Create image with two lines and draw gradient on it
@@ -40,46 +38,56 @@ def plot_color_gradients(gradients, names):
 
     fig.savefig('my-gradients.pdf')
 
+
 def hsv2rgb(h, s, v):
-    #TODO
+    # TODO
     return (h, s, v)
 
+
 def gradient_rgb_bw(v):
-    #TODO
-    return (0, 0, 0)
+    return (v, v, v)
 
 
 def gradient_rgb_gbr(v):
-    #TODO
-    return (1, 1, 1)
+    if v <= 0.5:
+        r = 0
+        g = (1 - 2*v)
+        b = 2*v
+    else:
+        r = abs(1 - v/0.5)
+        g = 0
+        b = 2 - 2*v
+
+    return (r, g, b)
 
 
 def gradient_rgb_gbr_full(v):
-    #TODO
+    # TODO
     return (0, 0, 0)
 
 
 def gradient_rgb_wb_custom(v):
-    #TODO
+    # TODO
     return (0, 0, 0)
 
 
 def gradient_hsv_bw(v):
-    #TODO
+    # TODO
     return hsv2rgb(0, 0, 0)
 
 
 def gradient_hsv_gbr(v):
-    #TODO
+    # TODO
     return hsv2rgb(0, 0, 0)
 
+
 def gradient_hsv_unknown(v):
-    #TODO
+    # TODO
     return hsv2rgb(0, 0, 0)
 
 
 def gradient_hsv_custom(v):
-    #TODO
+    # TODO
     return hsv2rgb(0, 0, 0)
 
 
