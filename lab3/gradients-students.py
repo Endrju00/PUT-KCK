@@ -62,8 +62,24 @@ def gradient_rgb_gbr(v):
 
 
 def gradient_rgb_gbr_full(v):
-    # TODO
-    return (0, 0, 0)
+    if v <= 0.25:
+        r = 0
+        g = 1
+        b = 4 * v
+    elif 0.25 < v <= 0.5:
+        r = 0
+        g = (2 - 4*v)
+        b = 1
+    elif 0.5 < v <= 0.75:
+        r = 4 * (v-0.5)
+        g = 0
+        b = 1
+    elif v > 0.75:
+        r = 1
+        g = 0
+        b = (2 - 4*(v-0.5))
+
+    return (r, g, b)
 
 
 def gradient_rgb_wb_custom(v):
