@@ -83,23 +83,37 @@ def gradient_rgb_gbr_full(v):
 
 
 def gradient_rgb_wb_custom(v):
-    if v <= 0.25:
-        r = 1 - 4 * v
-        g = 1 - 4 * v
-        b = 1
-    elif 0.25 < v <= 0.5:
-        r = 4*(v-0.25)
-        g = 4*(v-0.25)
-        b = 1
-    elif 0.5 < v <= 0.75:
+    r = 0
+    g = 0
+    b = 0
+    if v <= 0.15:
         r = 1
-        g = 1
+        g = 1 - 1/0.15 * v
         b = 1
-    elif v > 0.75:
-        r = 1 - 4*(v-0.75)
-        g = 1 - 4*(v-0.75)
-        b = 1 - 4*(v-0.75)
-
+    elif 0.15 < v <= 0.3:
+        r = 1 - 1/0.15 * (v - 0.15)
+        g = 0
+        b = 1
+    elif 0.3 < v <= 0.45:
+        r = 0
+        g = 1/0.15 * (v - 0.3)
+        b = 1
+    elif 0.45 < v <= 0.6:
+        r = 0
+        g = 1
+        b = 1 - 1/0.15 * (v - 0.45)
+    elif 0.6 < v <= 0.75:
+        r = 1/0.15 * (v - 0.6)
+        g = 1
+        b = 0
+    elif 0.75 < v <= 0.85:
+        r = 1
+        g = 1 - 1/0.1 * (v - 0.75)
+        b = 0
+    elif 0.85 < v <= 1:
+        r = 1 - round(1/0.15 * (v - 0.85), 2)
+        g = 0
+        b = 0
     return (r, g, b)
 
 
@@ -131,3 +145,5 @@ if __name__ == '__main__':
                  gradient_hsv_bw, gradient_hsv_gbr, gradient_hsv_unknown, gradient_hsv_custom)
 
     plot_color_gradients(gradients, [toname(g) for g in gradients])
+    # for i in range(1024):
+    #     print(gradient_rgb_wb_custom(i/1000))
