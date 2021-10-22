@@ -154,8 +154,9 @@ def gradient_hsv_unknown(v):
 
 
 def gradient_hsv_custom(v):
-    # TODO
-    return hsv2rgb(0, 0, 0)
+    h = 360 * v
+    s = 50 + 50 * v
+    return hsv2rgb(h, s, 100)
 
 
 if __name__ == '__main__':
@@ -166,5 +167,3 @@ if __name__ == '__main__':
                  gradient_hsv_bw, gradient_hsv_gbr, gradient_hsv_unknown, gradient_hsv_custom)
 
     plot_color_gradients(gradients, [toname(g) for g in gradients])
-    # for i in range(1000):
-    #     gradient_hsv_gbr(i/1000)
