@@ -40,8 +40,27 @@ def plot_color_gradients(gradients, names):
 
 
 def hsv2rgb(h, s, v):
-    # TODO
-    return (h, s, v)
+    if s == 0:
+        return (s, s, s)
+    if s > 0:
+        h_i = floor(h/60)
+        f = h/60 - h_i
+        p = v * (100 - s)
+        q = v * (100 - (s * f))
+        t = v * (100 - (s * (1 - f)))
+
+        if h_i == 0:
+            return (v, t, p)
+        elif h_i == 1:
+            return (q, v, p)
+        elif h_i == 2:
+            return (p, v, t)
+        elif h_i == 3:
+            return (p, q, v)
+        elif h_i == 4:
+            return (t, p, v)
+        elif h_i == 5:
+            return (v, p, q)
 
 
 def gradient_rgb_bw(v):
