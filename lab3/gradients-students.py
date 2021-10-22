@@ -149,8 +149,8 @@ def gradient_hsv_gbr(v):
 
 
 def gradient_hsv_unknown(v):
-    # TODO
-    return hsv2rgb(0, 0, 0)
+    h = 120 - 120 * v
+    return hsv2rgb(h, 50, 100)
 
 
 def gradient_hsv_custom(v):
