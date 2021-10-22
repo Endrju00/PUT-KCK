@@ -3,6 +3,7 @@ import numpy as np
 from matplotlib import rc
 import matplotlib.pyplot as plt
 import matplotlib
+from math import floor
 # So that we can render files without GUI
 matplotlib.use('Agg')
 
@@ -45,9 +46,11 @@ def hsv2rgb(h, s, v):
     if s > 0:
         h_i = floor(h/60)
         f = h/60 - h_i
-        p = v * (100 - s)
-        q = v * (100 - (s * f))
-        t = v * (100 - (s * (1 - f)))
+        p = v * (100 - s) / 10000
+        q = v * (100 - (s * f)) / 10000
+        t = v * (100 - (s * (1 - f))) / 10000
+
+        v /= 100
 
         if h_i == 0:
             return (v, t, p)
@@ -141,8 +144,8 @@ def gradient_hsv_bw(v):
 
 
 def gradient_hsv_gbr(v):
-    # TODO
-    return hsv2rgb(0, 0, 0)
+    h = 120 + 240 * v
+    return hsv2rgb(h, 100, 100)
 
 
 def gradient_hsv_unknown(v):
@@ -163,5 +166,5 @@ if __name__ == '__main__':
                  gradient_hsv_bw, gradient_hsv_gbr, gradient_hsv_unknown, gradient_hsv_custom)
 
     plot_color_gradients(gradients, [toname(g) for g in gradients])
-    # for i in range(1024):
-    #     print(hsv2rgb(0, 0, i/1000))
+    # for i in range(1000):
+    #     gradient_hsv_gbr(i/1000)
