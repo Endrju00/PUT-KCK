@@ -41,7 +41,7 @@ def plot_color_gradients(gradients, names):
 
 def hsv2rgb(h, s, v):
     if s == 0:
-        return (s, s, s)
+        return (v, v, v)
     if s > 0:
         h_i = floor(h/60)
         f = h/60 - h_i
@@ -137,8 +137,7 @@ def gradient_rgb_wb_custom(v):
 
 
 def gradient_hsv_bw(v):
-    # TODO
-    return hsv2rgb(0, 0, 0)
+    return hsv2rgb(0, 0, v)
 
 
 def gradient_hsv_gbr(v):
@@ -165,4 +164,4 @@ if __name__ == '__main__':
 
     plot_color_gradients(gradients, [toname(g) for g in gradients])
     # for i in range(1024):
-    #     print(gradient_rgb_wb_custom(i/1000))
+    #     print(hsv2rgb(0, 0, i/1000))
