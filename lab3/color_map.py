@@ -26,19 +26,25 @@ def hsv2rgb(h, s, v):
     return hsv_to_rgb(np.array([h, s, v]))
 
 
-def color_map(v, max_v, min_v):
-    h = (max_v - v) * 120 / (max_v - min_v)
-    s = 1
-    v = 1
-    return hsv2rgb(h/360, s, v)
-
 
 def plot_height_map(data, width, height, max_v, min_v):
+    
+    def color_map(v, val):
+        h = (max_v - v) * 120 / (max_v - min_v)
+        s = 1
+        return hsv2rgb(h/360, s, val)
+
     img = np.zeros((width, height, 3))
 
     for i in range(width):
         for j in range(height):
-            img[i, j] = color_map(data[i, j], max_v, min_v)
+            val = 0.75
+            if j > 0:
+                if data[i, j-1] > data[i, j]:
+                    val = 0.5
+                else:
+                    val = 1
+            img[i, j] = color_map(data[i, j], val)
 
     plt.figure(figsize=(10, 10))
     plt.imshow(img)
