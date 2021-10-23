@@ -1,23 +1,49 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from matplotlib.colors import hsv_to_rgb
 
-f = open("big.dem", "r")
-w, h, distance = tuple(map(int, f.readline().split()))
-data = [list(map(float, f.readline().split()))]
 
-for line_number in range(h-1):
-    line = list(map(float, f.readline().split()))
-    new_line = []
-    for value in line:
-        new_line.append(value)
+def main():
+    f = open("big.dem", "r")
+    lines = f.readlines()
+    f.close()
 
-    data.append(new_line)
+    w, h, distance = map(int, lines[0].split())
+    data = []
 
-data = np.array(data)
+    for line in lines[1:]:
+        data.append(line.split())
+    data = np.array(data, dtype='float')
 
-plt.imshow(data, cmap='turbo')
-plt.colorbar()
-plt.show()
+    max_value = np.amax(data)
+    min_value = np.amin(data)
 
-f.close()
+    plot_height_map(data, w, h, max_value, min_value)
+
+
+def hsv2rgb(h, s, v):
+    return hsv_to_rgb(np.array([h, s, v]))
+
+
+def color_map(v, max_v, min_v):
+    h = (max_v - v) * 120 / (max_v - min_v)
+    s = 1
+    v = 1
+    return hsv2rgb(h/360, s, v)
+
+
+def plot_height_map(data, width, height, max_v, min_v):
+    img = np.zeros((width, height, 3))
+
+    for i in range(width):
+        for j in range(height):
+            img[i, j] = color_map(data[i, j], max_v, min_v)
+
+    plt.figure(figsize=(10, 10))
+    plt.imshow(img)
+    plt.show()
+
+
+if __name__ == '__main__':
+    main()
