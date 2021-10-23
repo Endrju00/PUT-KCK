@@ -28,7 +28,7 @@ def hsv2rgb(h, s, v):
 
 
 def plot_height_map(data, width, height, max_v, min_v):
-    
+
     def color_map(v, val):
         h = (max_v - v) * 120 / (max_v - min_v)
         s = 1
@@ -48,7 +48,7 @@ def plot_height_map(data, width, height, max_v, min_v):
 
     plt.figure(figsize=(10, 10))
     plt.imshow(img)
-    plt.show()
+    plt.savefig('height-map.pdf')
 
 
 if __name__ == '__main__':
