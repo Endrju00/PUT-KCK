@@ -39,7 +39,7 @@ def main():
         plt.xticks([])
         plt.yticks([])
 
-    plt.show()
+    plt.savefig('simple_contour.pdf')
 
 
 if __name__ == '__main__':
