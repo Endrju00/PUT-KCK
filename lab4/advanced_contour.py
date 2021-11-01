@@ -1,9 +1,5 @@
-import numpy as np
 import matplotlib.pyplot as plt
 import cv2 as cv
-
-from skimage import io, filters, color, measure, feature
-from random import randint
 
 
 PLANES = (
@@ -102,7 +98,7 @@ def main():
         plt.yticks([])
 
     plt.savefig('advanced_contour.pdf')
-    
+
 
 if __name__ == '__main__':
     main()
